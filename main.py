@@ -1,3 +1,5 @@
+from tensorflow.keras.utils import plot_model
+
 import argparse
 import multiprocessing
 import os
@@ -18,6 +20,11 @@ tf.random.set_seed(12345)
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
+
+
+def show():
+    model = nn.build_model()
+    plot_model(model, to_file='model_architecture.png', show_shapes=True)
 
 
 def train():
@@ -284,6 +291,7 @@ if __name__ == '__main__':
     parser.add_argument('--record', action='store_true')
     parser.add_argument('--train', action='store_true')
     parser.add_argument('--test', action='store_true')
+    parser.add_argument('--show', action='store_true')
 
     args = parser.parse_args()
     if args.anchor:
@@ -294,3 +302,5 @@ if __name__ == '__main__':
         train()
     if args.test:
         test()
+    if args.show:
+        show()
